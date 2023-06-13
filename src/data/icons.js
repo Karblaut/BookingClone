@@ -1,5 +1,4 @@
 import { faBed, faCalendarDays, faCar, faPerson, faPlane } from "@fortawesome/free-solid-svg-icons";
-
 export const icons = [
   { icon: faBed, name: "Stays", spanText: "Where are you going?" },
   { icon: faCalendarDays, name: "Flights", spanText: "date to date" },

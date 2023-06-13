@@ -94,7 +94,52 @@ margin-bottom: 20px;
   
   .date {
     position: absolute;
+    overflow: hidden;
     top: 50px;
     z-index: 2;
   }
+  .occupancyOptions {
+    z-index: 2;
+    background-color: white;
+    color: gray;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    position: absolute;
+    top: 50px;
+    right: 8%;
+    width: 150px;
+
+  &--adults {
+    top: 50px;
+  }
+
+  &--children {
+    top: 90px;
+  }
+
+  &--room {
+    top: 130px;
+  }
+  }
+  .occupancyCounterButton {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #0071c2;
+    color: #0071c2;
+    cursor: pointer;
+    background-color: white;
+    
+  }
+  .occupancyOptionText{
+    width: 70px;
+  }
+  .occupancyCounterButton:disabled {
+    cursor: not-allowed;
+  }
+
 }

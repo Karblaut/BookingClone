@@ -1,24 +1,43 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { icons } from "../../data/icons";
 import { DateRange } from 'react-date-range';
+import format from "date-fns/format";
+import 'react-date-range/dist/styles.css'; // główny plik CSS
+import 'react-date-range/dist/theme/default.css'; // plik CSS motywu
+import { icons } from "../../data/icons";
 import "./header.scss";
-import 'react-date-range/dist/styles.css'; // main css file
-import 'react-date-range/dist/theme/default.css'; // theme css file
 
 const Header = () => {
+  const [openDate,setOpenDate] = useState(false)
   const [date, setDate] = useState([
     {
       startDate: new Date(),
-      endDate: null,
+      endDate: new Date(),
       key: 'selection'
     }
   ]);
+  const [openOptions,setOpenOptions] =useState(false);
+  const [option,setOption] = useState(
+{
+adult:1,
+children:0,
+room:1
+}
+  );
+  const optionsOfOccupancy = [
+    { key: 'adult', label: 'Adults', count: 1 },
+    { key: 'children', label: 'Children', count: 1 },
+    { key: 'room', label: 'Room', count: 1 },
+  ];
   const [activeIndex, setActiveIndex] = useState(0);
   const handleItemClick = (index) => {
     setActiveIndex(index);
   };
-
+const handleOption = (name,operation) =>{
+  setOption(prev=>{return {
+    ...prev, [name]: operation === "increase" ? option[name] + 1 : option[name] -1,
+  }})
+}
   return (
     <div className="header">
       <div className="headerContainer">
@@ -49,19 +68,28 @@ const Header = () => {
         </div>
         <div className="headerSearchItem">
           <FontAwesomeIcon icon={icons[1].icon} className="headerIcon" />
-          <span className="headerSearchText">{icons[1].spanText}
-          <DateRange
+          <span onClick={()=>setOpenDate(!openDate)} className="headerSearchText">{`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(date[0].endDate, "MM/dd/yyyy")}`}
+        </span>
+        {openDate &&<DateRange
           editableDateInputs={true}
           onChange={item => setDate([item.selection])}
           moveRangeOnFirstSelection={false}
           ranges={date}
           className="date"
-          /></span>
+          />}
         </div>
         <div className="headerSearchItem">
           <FontAwesomeIcon icon={icons[3].icon} className="headerIcon" />
-          <span className="headerSearchText">{icons[3].spanText}</span>
+          <span className="headerSearchText">{`${option.adult} adult ${option.children} children ${option.room} room`}</span>
+      {optionsOfOccupancy.map((opt, index) => (
+        <div className={`occupancyOptions occupancyOptions--${opt.key}`} key={index}>
+          <span className="occupancyOptionText">{opt.label}</span>
+          <button className="occupancyCounterButton" onClick={()=>handleOption(`${opt.key}`,"decrease")}>-</button>
+          <span className="occupancyCounterNumber">{opt.count}</span>
+          <button className="occupancyCounterButton"onClick={()=>handleOption(`${opt.key}`,"increase")}>+</button>
         </div>
+      ))}
+    </div>
       </div>
       </div>
     </div>
@@ -70,3 +98,4 @@ const Header = () => {
 };
 
 export default Header;
+
