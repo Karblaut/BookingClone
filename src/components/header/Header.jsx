@@ -7,7 +7,10 @@ import 'react-date-range/dist/theme/default.css'; // plik CSS motywu
 import { icons } from "../../data/icons";
 import "./header.scss";
 
-const Header = (type) => {
+const Header = ({ type }) => {
+  console.log(type); 
+  console.log(type === 'list' ? 'List mode' : 'Not in list mode');
+
   const [openDate,setOpenDate] = useState(false)
   const [date, setDate] = useState([
     {
@@ -17,6 +20,7 @@ const Header = (type) => {
     }
   ]);
   const [openOptions,setOpenOptions] =useState(false);
+  
   const [option,setOption] = useState(
 {
 adult:1,
@@ -24,11 +28,13 @@ children:0,
 room:1
 }
   );
+
   const optionsOfOccupancy = [
     { key: 'adult', label: 'Adults', count: `${option.adult}` },
     { key: 'children', label: 'Children', count: `${option.children}` },
     { key: 'room', label: 'Room', count: `${option.room}` },
   ];
+  
   const [activeIndex, setActiveIndex] = useState(0);
   const handleItemClick = (index) => {
     setActiveIndex(index);
@@ -40,7 +46,7 @@ const handleOption = (name,operation) =>{
 }
   return (
     <div className="header">
-      <div className="headerContainer">
+      <div className={type === "list" ? "headerContainer listMode" : "headerContainer" }>
              <div className="headerList">
         {icons.map((icon, index) => (
           <div
@@ -53,7 +59,7 @@ const handleOption = (name,operation) =>{
           </div>
         ))}
       </div>
-      { type !== "list" && 
+      { type !== 'list' && 
        <div className="wideSearchBarWrapper">
          <h1 className="headerTitle">
               A lifetime of discounts? It's Genius.

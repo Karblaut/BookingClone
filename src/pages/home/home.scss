@@ -1,11 +1,11 @@
-.home {
+.homeWrapper{
+.homeFeautredWrapper {
+  margin-top: 50px;
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100vh;
+    gap: 30px;
   }
   
-  h1 {
-    font-size: 48px;
-  }
-  
+}

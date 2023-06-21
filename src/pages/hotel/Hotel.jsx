@@ -4,7 +4,8 @@ import Header from '../../components/header/Header';
 
 const Hotel = () => {
   return (
-    <div><Navbar/>
+    <div>
+    <Navbar/>
     <Header/>
     </div>
     

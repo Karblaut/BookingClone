@@ -5,7 +5,9 @@ import './hotelList.scss';
 const hotelList = () => {
   return (
     <div>
-<Navbar/><Header type="list"/>
+<Navbar/>
+<Header type="list"/>
+
     </div>
     
   );
