@@ -90,6 +90,8 @@ margin-bottom: 20px;
   .headerSearchText {
     color: lightgray;
     cursor: pointer;
+    user-select: none;
+      position: relative;
   }
   
   .date {

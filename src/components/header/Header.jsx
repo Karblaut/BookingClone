@@ -7,7 +7,7 @@ import 'react-date-range/dist/theme/default.css'; // plik CSS motywu
 import { icons } from "../../data/icons";
 import "./header.scss";
 
-const Header = () => {
+const Header = (type) => {
   const [openDate,setOpenDate] = useState(false)
   const [date, setDate] = useState([
     {
@@ -25,9 +25,9 @@ room:1
 }
   );
   const optionsOfOccupancy = [
-    { key: 'adult', label: 'Adults', count: 1 },
-    { key: 'children', label: 'Children', count: 1 },
-    { key: 'room', label: 'Room', count: 1 },
+    { key: 'adult', label: 'Adults', count: `${option.adult}` },
+    { key: 'children', label: 'Children', count: `${option.children}` },
+    { key: 'room', label: 'Room', count: `${option.room}` },
   ];
   const [activeIndex, setActiveIndex] = useState(0);
   const handleItemClick = (index) => {
@@ -53,6 +53,8 @@ const handleOption = (name,operation) =>{
           </div>
         ))}
       </div>
+      { type !== "list" && 
+       <div className="wideSearchBarWrapper">
          <h1 className="headerTitle">
               A lifetime of discounts? It's Genius.
             </h1>
@@ -80,18 +82,28 @@ const handleOption = (name,operation) =>{
         </div>
         <div className="headerSearchItem">
           <FontAwesomeIcon icon={icons[3].icon} className="headerIcon" />
-          <span className="headerSearchText">{`${option.adult} adult ${option.children} children ${option.room} room`}</span>
+          <span  onClick={() => setOpenOptions(!openOptions)} className="headerSearchText">{`${option.adult} adult ${option.children} children ${option.room} room`}</span>
+          {openOptions && (
+  <div className="occupancyOptionsWrapper"> 
       {optionsOfOccupancy.map((opt, index) => (
         <div className={`occupancyOptions occupancyOptions--${opt.key}`} key={index}>
           <span className="occupancyOptionText">{opt.label}</span>
-          <button className="occupancyCounterButton" onClick={()=>handleOption(`${opt.key}`,"decrease")}>-</button>
+          <button
+          disabled={(opt.count <= 1 && (opt.key !== 'children')) || (opt.count <= 0)}
+          className="occupancyCounterButton" 
+          onClick={()=>handleOption(`${opt.key}`,"decrease")}>-</button>
           <span className="occupancyCounterNumber">{opt.count}</span>
           <button className="occupancyCounterButton"onClick={()=>handleOption(`${opt.key}`,"increase")}>+</button>
         </div>
       ))}
+      \
+      </div>
+)}
+      /
     </div>
-      </div>
-      </div>
+      </div> 
+      </div> }
+      </div> 
     </div>
  
   );
